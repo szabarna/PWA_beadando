@@ -1,0 +1,807 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&family=Roboto:wght@300&display=swap');
+:root {
+    --bDarkColor: #043F98;
+    --bLighterColor: #1165C1;
+    --bLighter2Color: #66BEF9;
+    --bLighter3Color: #309AF1;
+   
+}
+
+html {
+  --offset: 0%;
+  --offset2: 0%;
+  --offset3: 0%;
+
+  --appOpacity: 0.2;
+  --background: linear-gradient(30deg, #111 30%, #333 90%);
+
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  background: var(--background);
+  overflow: hidden;
+}
+
+.loginForm {
+  position: absolute;
+  width: 35rem;
+  max-width: 90vw;
+  height: 60%;
+  max-height: 100vw;
+  min-height: 20rem;
+  justify-self: center;
+  align-self: center;
+  bottom: auto;
+  border-radius: 0.35rem;
+  background-color: white;
+  box-shadow: 0 0 10px 0 #333 inset;
+  color: black;
+  display: grid;
+  grid-template-rows: repeat(4, auto);
+  gap: 10px;
+  justify-items: center;
+  align-content: space-around;
+  font-family: 'Poppins', sans-serif;
+  z-index: 1;
+}
+
+.loginForm div {
+  position: relative;
+  display: grid;
+  width: 90%;
+  grid-template-rows: auto auto;
+
+  input {
+      border: none;
+      border-bottom: 1px solid black;
+      padding-bottom: 0.25rem;
+      font-size: 1.15rem;
+      font-family: 'Poppins', sans-serif;
+      color: black;
+      transition: all 0.2s ease-in-out;
+      width: 100%;
+  }
+
+  label {
+    transition: all 0.2s ease-in-out;
+    display: grid;
+    opacity: 1;
+  }
+
+  label:hover {
+    cursor: text;
+  }
+
+ 
+  .email:after {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+    color: var(--bLighterColor);
+    transform: translateY(var(--offset));
+  }
+
+  .password:after {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+    color: var(--bLighterColor);
+    transform: translateY(var(--offset2));
+  }
+
+  .username:after {
+    content: attr(data-placeholder);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: all 0.2s ease-in-out;
+    color: var(--bLighterColor);
+    transform: translateY(var(--offset3));
+  }
+
+  // label:focus-within::after {
+  //   transform: translateY(-75%);
+  // }
+
+  input:focus{
+    outline: none;
+  }
+
+}
+.alreadyContainer {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    justify-content: center;
+    column-gap: 1rem;
+
+    a {
+      font-family: 'Poppins', sans-serif;
+      color: var(--bLighterColor);
+      font-size: 1.15rem;
+    }
+}
+
+.formH1 {
+  position: relative;
+  font-size: 3.25rem;
+  position: relative;
+  color:rgb(50, 50, 50);
+  padding: 10px;
+  text-align: center;
+}
+
+.loginSubmit {
+  padding: 1rem 4rem;
+  font-size: 1.25rem;
+  color: white;
+  border: 1px solid white;
+  background-color: #222;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  background-size: 100% 300%;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 0 5px 0 #333 inset;
+}
+
+.loginSubmit:hover {
+    background-color: white;
+    color: #222;
+    border: 1px solid #222;
+}
+
+
+.mainContainer {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+}
+
+
+.navbar {
+  width: 100vw;
+  height: 3.5rem;
+  position: absolute;
+  top: 0;
+  background-color: #111;
+  z-index: 2;
+  border-bottom: 1px solid gray;
+}
+
+.section {
+
+  position: absolute;
+  display: grid;
+  bottom: 0;
+  width: 100vw;
+  height: calc(100vh - 3.5rem);
+  background-image: url('./img/big.jpg');
+  background-size: cover;
+  background-image: none;
+  background-color: #000;
+  justify-self: center;
+ 
+}
+
+.list {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, auto);
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.li {
+  height: 100%;
+  display: grid;
+  list-style: none;
+  color: white;
+  font-size: 1.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: lighter;
+  align-items: center;
+  user-select: none;
+  
+  .btn {
+    font-size: 1rem;
+    padding: 0.35rem 0.5rem;
+    border: none;
+    border-radius: 1.5rem;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .btn:hover {
+    background-image: linear-gradient(30deg,var(--bDarkColor), var(--bLighterColor));
+  }
+}
+
+#userLi {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+}
+
+.userIcon {
+  position: relative;
+  transform: scale(1.15);
+  margin-right: 0.5rem;
+}
+
+#logOut {
+  position: absolute;
+  justify-self: flex-end;
+  margin-right: 5vw;
+  height: 100%;
+
+}
+.Overlay {
+  top: 0;
+  position: absolute;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  background-color: #222;
+}
+
+.Modal {
+  display: grid;
+  position: absolute;
+  top: calc(50% + 1.5rem);
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 32.5vw;
+  min-width: 32.5rem;
+  height: 75vh;
+  overflow: hidden;
+  z-index: 5;
+  border-radius: 0.15rem;
+  justify-content: center;
+  align-content: center;
+
+}
+
+.modalForm {
+  display: grid;
+  grid-template-rows: repeat(5, auto);
+  align-content: space-around;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  font-family: 'Poppins', sans-serif;
+
+  .formElement {
+    display: grid;
+    position: relative;
+    justify-self: center;
+    display: grid;
+    grid-template-rows: auto auto;
+    background-color: #222;
+    width: 75%;
+    padding: 1rem 1rem;
+    border-radius: 0.25rem;
+    align-content: space-around;
+
+    input {
+      font-size: 1rem;
+    }
+
+    input:focus {
+      outline: none;
+    }
+
+    label {
+      color: white;
+      font-size: 1.4rem;
+      position: relative;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.modalForm:nth-child(1) {
+    color: white;
+}
+
+.modalImgHolder {
+  position: relative;
+  justify-self: center;
+  width: 8.5rem;
+  height: 8.5rem;
+  border-radius: 50%;
+  background-image: url('./img/small.jpg');
+  cursor: pointer;
+}
+
+.modalSubmit {
+  position: relative;
+  justify-self: center;
+  padding: 0.75rem 1rem;
+  background-color: #222;
+  color: white;
+  font-size: 1.25rem;
+  border: none;
+  border-radius: .35rem;
+  border: 2px solid white;
+  cursor: pointer;
+}
+
+.modalSubmit:hover {
+  background-color: var(--bDarkColor);
+  color: white;
+}
+
+.exitIcon {
+  position: absolute;
+  background-color: transparent;
+  transform: scale(2.5);
+  top: 0;
+  right: 0;
+  margin-top: 2rem;
+  margin-right: 2rem;
+  cursor: pointer;
+  fill: #333;
+}
+
+#addMusic {
+  position: absolute;
+  justify-self: flex-start;
+  margin-left: 12.5vw;
+}
+
+.musicButton {
+  font-size: 1.35rem;
+  font-family: monospace;
+  padding: 0.35rem;
+  border: none;
+  border-radius: 0.25rem;
+  background-color: #222;
+  color: white;
+  cursor: pointer;
+  border: 1px solid white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+ 
+}
+
+.musicButton:hover {
+  background-color: var(--bDarkColor);
+}
+
+.musicIcon {
+  transform: scale(1.15);
+  margin-right: 0.35rem;
+}
+
+.songHolder {
+  position: relative;
+  width: 17.5rem;
+  height: 22.5rem !important;
+  justify-self: center;
+  align-self: center !important;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  background-color: rgb(20, 20, 20);
+  background-color: transparent;
+  z-index: 0;
+  transition: all 0.1s ease;
+  cursor: pointer;
+  overflow: hidden;
+
+  h1 {
+    position: relative;
+    color: white;
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    pointer-events: none;
+    user-select: none;
+  }
+  img {
+    position: absolute;
+    width: 105%;
+    top: 0;
+    border-radius: 0.25rem;
+    pointer-events: none;
+    user-select: none;
+    justify-self: center;
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.05);
+  }
+
+  div {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 40%;
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+    align-content: space-around;
+    border-radius: 0.25rem;
+    pointer-events: none;
+  }
+
+  audio {
+    display: none;
+  }
+ 
+}
+
+.songHolder:hover {
+  background-color: rgb(30, 30, 30);
+  background-image: radial-gradient(50%, rgb(100, 100, 100), rgb(20, 20, 20));
+
+  img {
+    box-shadow: 0 0 30px -20px black;
+    transform: scaleZ(1.1);
+  }
+}
+
+.songsMainContainer {
+  position: relative;
+  display: grid;
+  justify-content: flex-start;
+  column-gap: 2rem;
+  width: 100vw;
+  height: 47.5vh;
+  background: linear-gradient(30deg, rgb(25, 25, 25), rgb(20, 20, 20));
+  align-self: center;
+  overflow: hidden;
+  overflow-x: auto;
+  margin-bottom: 3.5rem;
+}
+
+.songHolder:nth-child(1) {
+  margin-left: 5rem;
+}
+
+.mainAudioContainer {
+  position: absolute;
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  width: 100vw;
+  height: 7.5rem;
+  background-color: transparent;
+  align-items: flex-end;
+  bottom: 0;
+}
+
+.divForMobileView {
+   position: absolute;
+   display: grid;
+   width: 100vw;
+   height: calc(100% - 7.5rem);
+   background-color: #111;
+   z-index: 5;
+   bottom: 7.5rem;
+   display: none;
+   font-family: 'Poppins', sans-serif;
+   color: white;
+   font-size: 0.9rem;
+   user-select: none;
+   background-size: contain;
+   background-repeat: no-repeat;
+   background-position: 50% 0%;
+   justify-self: center;
+   
+  svg {
+      fill: white;
+      background-color: #333;
+      border-radius: 100%;
+  }
+
+   div {
+      position: absolute;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      width: 100%;
+      background: linear-gradient(0deg, #222 5%, #111);
+      border-bottom: 1px solid white;
+      height: 7rem;
+      bottom: 0;
+      justify-items: center;
+      align-items: center;
+      justify-self: center;
+      pointer-events: none;
+
+     div {
+       position: relative;
+       display: grid;
+       height: 100%;
+       width: 100%;
+       grid-template-rows: repeat(2, auto);
+       grid-template-columns: none;
+       justify-items: flex-start;
+       align-content: space-evenly;
+       font-size: 0.6rem;
+       background-color: transparent;
+       border: none;
+     }
+
+   }
+}
+
+.audioPlayerContainer {
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  background-color: rgb(25, 25, 25);
+  color: white;
+  bottom: 0;
+  width: 100vw;
+  height: 7.5rem;
+  font-family: 'Poppins', sans-serif;
+  justify-items: center;
+ 
+}
+
+.audioPlayerFirstElement {
+  display: grid;
+  align-items: center;
+  grid-template-columns: repeat(2, auto);
+  justify-content: flex-start;
+  height: 85%;
+  width: 20vw;
+  user-select: none;
+  pointer-events: none;
+
+  h1 {
+    font-size: 1.5rem;
+    line-height: 1.5rem;
+  }
+  h2 {
+    font-size: 1.25rem;
+  }
+  img {
+    background-color: black;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    border-radius: 0.15rem;
+  }
+
+}
+
+.audioPlayerSecondElement {
+  position: relative;
+    display: grid;
+    grid-template-rows: repeat(2, 1fr);
+    justify-self: center;
+    justify-items: center;
+    align-items: center;
+    row-gap: 0rem;
+    height: 85%;
+    
+    h2 {
+      color: whitesmoke;
+      font-family: 'Roboto', sans-serif;
+      font-size: 0.9rem;
+      user-select: none;
+    }
+
+    input {
+      width: 20vw;
+      height: 0.25rem;
+      border-radius: 3rem;
+      position: relative;
+      margin-top: 0.15rem;
+    }
+
+    input::-moz-range-thumb  {
+      box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+      border: 0px solid #000000;
+      height: 12px;
+      width: 12px;
+      border-radius: 50%;
+      background: #ffffff;
+      cursor: pointer;
+      width: 0;
+    }
+
+
+    input::-moz-range-track {
+      width: 100%;
+      height: 5px;
+      cursor: pointer;
+      border: 2px solid black;
+      border-radius: 3rem;
+    }
+
+    input::-moz-range-progress {
+      border-radius: 3rem;
+      border: none;
+      height: 4px;
+      width: 100%;
+      box-shadow: none;
+      border: 1px solid black;
+      background-color: #555;
+    } 
+
+    input:hover {
+      &::-moz-range-thumb {
+        width: 12px;
+      }
+      &::-moz-range-track {
+        background-color: #555;
+      }
+      &::-moz-range-progress {
+        background-color: var(--bLighterColor);
+        height: 5px;
+      }
+      
+    }
+
+    .playIconDiv {
+      display: grid;
+      height: 100%;
+      width: 100%;
+      align-items: center;
+      justify-items: center;
+      
+    }
+    .playIcon {
+      // position: absolute;
+      fill: white;
+      transform: scale(3);
+      
+    }
+    .playIcon:hover {
+      transform: scale(3.25);
+    }
+
+    .pauseIcon {
+      // position: absolute;
+      fill: white;
+      transform: scale(3);
+      display: none;
+    }
+
+    .currentSongPlayInfo {
+      display: grid;
+      height: 100%;
+      grid-template-columns: repeat(3, auto);
+      column-gap: 0.5rem;
+      justify-content: center;
+      align-items: center;
+    }
+}
+
+.audioPlayerThirdElement {
+    width: 20vw;
+    height: 85%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: center;
+}
+
+
+.volumeDiv {
+  display: grid;
+  height: 100%;
+  align-items: center;
+  justify-items: flex-end;
+
+  .muteIcon {
+    position: absolute;
+    transform: scale(2);
+    margin-right: 1rem;
+    display: none;
+    cursor: pointer;
+  }
+  .volumeIcon {
+    //position: absolute;
+    transform: scale(2);
+    margin-right: 1rem;
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  .musicButton {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .editUserButton {
+    display: none;
+  }
+
+  .songHolder:nth-child(1) {
+    margin-left: 2.5rem;
+  }
+
+  .songHolder:last-child {
+    margin-right: 2.5rem;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .audioPlayerThirdElement {
+    display: none;
+  }
+
+  .audioPlayerFirstElement {
+    display: none;
+  }
+
+  .audioPlayerContainer {
+      grid-template-columns: auto;
+  }
+
+  .audioPlayerSecondElement {
+    input {
+      width: 10rem;
+    }
+  }
+
+}
+
+@media screen and (max-width: 1200px) {
+  .audioPlayerFirstElement {
+    justify-self: flex-start;
+
+    h1 {
+      font-size: 1.25rem;
+    }
+
+    h2 {
+      font-size: 1rem;
+    }
+  }
+}
+
+
+@media screen and (max-height: 800px) {
+   .songsMainContainer {
+     height: 60vh;
+   }
+
+  .songHolder {
+    height: auto;
+    align-self: auto;
+  }
+}
+
+
+
+
+
+
