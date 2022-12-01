@@ -47,7 +47,7 @@ export default function EditUserModal(props:any) {
 
     return (
         <>
-        <NavBar function={ toggleModal } func={ toggleModal2 } />
+        <NavBar indexedDB={props.indexedDB} function={ toggleModal } func={ toggleModal2 } />
         <AddMusicModal func={ toggleModal2 } toggleFunc={ props.func } ourState={ modalIsOpen2 } />
         <Modal
              isOpen={modalIsOpen}

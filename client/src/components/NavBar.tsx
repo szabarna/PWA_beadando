@@ -10,6 +10,8 @@ export default function NavBar(props:any) {
 
     const logOutUser = () => {
         localStorage.removeItem('token');
+        props.indexedDB.table("songs").clear();
+        console.log(props);
         window.location.href = '/login'
       }
 

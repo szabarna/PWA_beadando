@@ -1,5 +1,5 @@
 import '../App.scss';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { HiXMark } from 'react-icons/hi2'
 import Modal from 'react-modal';
 

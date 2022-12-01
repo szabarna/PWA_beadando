@@ -2,6 +2,7 @@ import { useState } from 'react';
 import '../App.scss';
 import gsap, { Circ } from 'gsap';
 import { useNavigate } from 'react-router-dom';
+import { from, map, switchMap } from 'rxjs';
 
 export default function Register() {
   const history = useNavigate();
@@ -12,26 +13,41 @@ export default function Register() {
  async function registerUser(event: React.FormEvent) {
 
     event.preventDefault();
+    try {
 
-    const response =  await fetch('http://localhost:1337/api/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      if(email != null && password != null && name != null) { 
 
-        body: JSON.stringify({
-          name, 
-          email, 
-          password,
-        }),
-
-    });
-
-    const data = await response.json()
-
-    if(data.status === 'ok') history('/login')
+        let registerUser$ = from(fetch('http://localhost:1337/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
     
-    console.log(data);
+          body: JSON.stringify({
+            name, 
+            email, 
+            password,
+          }),
+      
+        })).pipe(
+          switchMap((res) => res.json()),
+          map((item:any) => {
+      
+              if(item.status === 'ok') {
+                localStorage.setItem("userEmail", item.email);
+                history('/login')
+              } 
+              else alert('Please check your email and password!')
+    
+          })
+        ).subscribe();
+        
+      }
+    }
+    catch (err) {
+      console.log(err)
+    }
+   
  }
 
 

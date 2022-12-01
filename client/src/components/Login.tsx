@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '../App.scss';
 import gsap, { Circ } from 'gsap';
+import { from, map, switchMap } from 'rxjs';
 
 export default function Login() {
 
@@ -8,37 +9,61 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    const userEmail = localStorage.getItem("userEmail");
+    const emailInput = (document.querySelector('#emailInput') as HTMLInputElement);
+    const passwordInput = (document.querySelector('#passwordInput') as HTMLInputElement);
+
+    if(userEmail != null) {
+      console.log(userEmail);
+      emailInput.value = userEmail;
+      setEmail(userEmail);
+    }
+
+    if(emailInput.value != "") {
+
+      gsap.to('html', {
+        "--offset": "-75%",
+        duration: 0.1,
+        ease: Circ.easeInOut
+    })
+
+    }
+
+  }, [])
+
  async function loginUser(event: React.FormEvent) {
     event.preventDefault();
+  if(email != null && password != null) {
 
-    const response =  await fetch('http://localhost:1337/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+      let loginUser$ = from(fetch('http://localhost:1337/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email, 
+        password,
 
-        body: JSON.stringify({
-          email, 
-          password,
+      }),
 
-        }),
+    })).pipe(
+      switchMap((res) => res.json()),
+      map((item:any) => {
 
-    });
-
-    const data = await response.json()
-
-    if(data.user) {
-        alert('Login successful')
-        localStorage.removeItem('token')
-        localStorage.setItem('token', JSON.stringify(data.user) );
-        window.location.href = '/main'
-    }
-    else {
-        alert('Please check your email and password!')
-    }
-
+          if(item.user) {
+            alert('Login successful :happyface:')
+            localStorage.removeItem('token');
+            localStorage.removeItem('userEmail');
+            localStorage.setItem('token', JSON.stringify(item.user) );
+            window.location.href = '/main'
+          } else {
+            alert('Please check your email and password!')
+          }
+      })
+    ).subscribe();
     // console.log(data);
-    
+  } 
  }
 
 

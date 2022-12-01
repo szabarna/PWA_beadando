@@ -3,11 +3,13 @@ import { useEffect, useState } from 'react';
 import EditUserModal from './EditUserModal';
 import * as jose from 'jose';
 import { Buffer } from 'buffer';
-import { MdPauseCircleFilled, MdPlayCircle } from 'react-icons/md'
+import { MdAudiotrack, MdOutlineAudiotrack, MdPauseCircleFilled, MdPlayCircle } from 'react-icons/md'
 import { BsFillVolumeMuteFill, BsFillVolumeUpFill } from 'react-icons/bs';
 import Dexie from 'dexie';
 import gsap from 'gsap';
 import { HiXMark } from 'react-icons/hi2';
+import { from, map, switchMap } from 'rxjs';
+import { FaUserAstronaut } from 'react-icons/fa';
 
 export default function Main() {
 
@@ -169,74 +171,73 @@ export default function Main() {
   db.table("songs").clear();
 
   const token = localStorage.getItem('token');
+ 
   
-  if( token ) {
+  if( token ) { user = jose.decodeJwt(token); }
 
-          user = jose.decodeJwt(token);
-    
-   }
+ let songList$ = from(fetch('http://localhost:1337/api/getSongs', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user)
 
-  const response =  await fetch('http://localhost:1337/api/getFiles', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user)
-  });
-
-  const data = await response.json()
-
-  if(data) {
-
-      const songData:any = jose.decodeJwt(data.songs);
-
+  })).pipe(
+    switchMap((res) => res.json()),
+    map((item:any) => {
+      const songData:any = jose.decodeJwt(item.songs);
       const img = () => {
-          return (
-            <>
-            { songData.songs.map((item:any, index:any) => {
+        return (
+          <>
+          { songData.songs.map((item:any, index:any) => {
 
-              const image = Buffer.from(item.backgroundImg.data).toString('base64');
-              const audio = Buffer.from(item.audioFile.data).toString('base64');
+            const image = Buffer.from(item.backgroundImg.data).toString('base64');
+            const audio = Buffer.from(item.audioFile.data).toString('base64');
 
-              let songToBeAdded = {
-                img: image,
-                title: item.title,
-                artist: item.artist,
-                audio: audio
-              };
+            let songToBeAdded = {
+              img: image,
+              title: item.title,
+              artist: item.artist,
+              audio: audio
+            };
 
-             db.table("songs").add(songToBeAdded);
+           db.table("songs").add(songToBeAdded);
 
-              (document.querySelector('.songsMainContainer') as HTMLDivElement).style.gridTemplateColumns = `repeat(${songData.songs.length}, auto)`;
-              return ( <div className='songHolder' key={index} onClick={e => AddCurrentMusic(e) } >
-                   
-                    <img
-                   src={`data:image/png;base64,${image}`}
-                   alt={"songImg"}
-                   width={"auto"}
-                   height={200}
-                  // loading={"lazy"}
-                   />     
-                   <h1>{ item.title } </h1>
-                   <h1>{ item.artist } </h1>
-                   <audio controls>
-                     <source src={`data:audio/mp3;base64,${audio}`} type="audio/mpeg" />
-                   </audio> 
-                 </div>);
-            }) }
-             
-           </>
-          )
-      }
+            (document.querySelector('.songsMainContainer') as HTMLDivElement).style.gridTemplateColumns = `repeat(${songData.songs.length}, auto)`;
+            return ( <div className='songHolder' key={index} onClick={e => AddCurrentMusic(e) } >
+                 
+                  <img
+                 src={`data:image/png;base64,${image}`}
+                 alt={"songImg"}
+                 width={"auto"}
+                 height={200}
+                // loading={"lazy"}
+                 />
+                  <div className='h1Container'>
+                <div className='titleContainer songIconHolder'>
+                  <h1>{ item.title } </h1>
+                  <MdAudiotrack className='trackIcon' />
+                </div>
+                <div className="artistContainer">
+                  <h1>{ item.artist } </h1>
+                  <FaUserAstronaut className='astronautIcon' />
+                </div>
+                </div>
+                 <audio controls>
+                   <source src={`data:audio/mp3;base64,${audio}`} type="audio/mpeg" />
+                 </audio> 
+               </div>);
+          }) }
+           
+         </>
+        )
+    }
 
-      setRenderedSongs(img)
-     // console.log(audio)
-  }
-  else {
-    //  alert('Please check your email and password!')
-  }
+    setRenderedSongs(img)
+      
+    })
+  ).subscribe();
 
-  // console.log(data);
   
 }
  async function ListSongsFromIndexedDB() {
@@ -261,8 +262,14 @@ export default function Main() {
                 // loading={"lazy"}
                 />
                 <div className='h1Container'>
-                <h1>{ item.title } </h1>
-                <h1>{ item.artist } </h1>
+                <div className='titleContainer songIconHolder'>
+                  <h1>{ item.title } </h1>
+                  <MdAudiotrack className='trackIcon' />
+                </div>
+                <div className="artistContainer">
+                  <h1>{ item.artist } </h1>
+                  <FaUserAstronaut className='astronautIcon' />
+                </div>
                 </div>     
                 <audio controls>
                   <source src={`data:audio/mp3;base64,${item.audio}`} type="audio/mpeg" />
@@ -310,7 +317,7 @@ function closeDiv() {
   return (
     <>
       <div className='mainContainer' >
-        <EditUserModal func={ ListSongsMongoFetch } />
+        <EditUserModal indexedDB={db} func={ ListSongsMongoFetch } />
         <div className='section'></div>
         <div className="songsMainContainer">
         { renderedSongs }
@@ -332,7 +339,7 @@ function closeDiv() {
 
           <div className='audioPlayerContainer'>
             <div className='audioPlayerFirstElement'>
-              <img src="./img/spotify.png" alt="currentSongImage" className='currentSongImage' width={81} height={81} />
+              <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="currentSongImage" className='currentSongImage' width={81} height={81} />
               <div className='currentSongTextInfo'>
                 <h1 className='currentSongTitle'>currentSongTitle</h1>
                 <h2 className='currentSongArtist'>currentSongArtist</h2>
