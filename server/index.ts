@@ -53,7 +53,7 @@ app.post('/api/addSong', upload.any(), async (req, res) => {
  
 })
 
-app.post('/api/getFiles',async (req, res) => {
+app.post('/api/getSongs',async (req, res) => {
  
     try {
        
@@ -91,7 +91,7 @@ app.post('/api/register', async (req, res) => {
         });
 
         
-        res.json({ status: 'ok' })
+        res.json({ status: 'ok', email: req.body.email })
 
     } catch(err) {
         console.log(err)
